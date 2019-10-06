@@ -1,87 +1,60 @@
 import React, {Component} from 'react';
-import Form from './Components/Form/Form'
-import ListItem from './Components/ListItem/ListItem'
 
-import './App.scss';
+import Form from './Components/Form/Form';
+import ListItem from './Components/ListItem/ListItem';
+
+const key = "aee486591b99b00ee79a83728650a733";
 
 class App extends Component {
+
   state = {
-    courses :[
-      {name: 'HTML5'},
-      {name: 'CSS3'},
-      {name: 'react'}
-    ],
-    current: ''
+    tempreture: '',
+    city: '',
+    country: '',
+    humidity: '',
+    description: '',
+    error: ''
   }
 
-  // Functions
-
-  handleChange = (e) => {
-
-    this.setState({
-      current: e.target.value
-    })
-    
-  } 
-
-  handleDelete = (index) => {
-    const {courses} = this.state;
-    courses.splice(index , 1)
-    this.setState({
-      courses
-    })
-  }
-
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
-    const {courses, current} = this.state;
-    courses.push({name: current})
-    this.setState({
-      courses,
-      current: ''
-    })
+    // const city = e.target.elements.city.value; another way
+    // const country = e.target.elements.country.value; another way
+    const city = e.target.city.value,
+          country = e.target.country.value,
+          api = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${key}`),
+          data = await api.json();
+
+        if(city && country) {
+          this.setState({
+            tempreture: data.main.temp,
+            city: data.name,
+            country: data.sys.country,
+            humidity: data.main.humidity,
+            description: data.weather[0].description,
+            error: ''
+          })
+        } else {
+          this.setState({
+            tempreture: '',
+            city: '',
+            country: '',
+            humidity: '',
+            description: '',
+            error: 'Please enter a valid data'
+          })
+        }
   }
-
-  handleUpdate = (index, value) => {
-    const {courses} = this.state;
-    const course = courses[index]
-    course['name'] = value
-    this.setState({
-      courses
-    })
-
-  }
-
-  render() {
-    
-    const {courses, current} = this.state;
-    const Length = this.state.courses.length
-    const AllCourses = Length ? (
-      courses.map( (course, index) => {
-        return <ListItem  key={index}
-                          index={index}
-                          course={course}
-                          deleteItem={this.handleDelete}
-                          update={this.handleUpdate}
-                />
-      })
-    ) : (
-        <div className="alert alert-danger mt-3" role="alert">
-          There's no items to show
-        </div>
-    )
-
+  render(){
     return(
       <div className='container main'>
-        <h1 className='pt-5 text-center'>Add Courses App</h1>
-        <Form change={this.handleChange}
-              submit={this.handleSubmit}
-              current={current}
-        />
-        <ul>{AllCourses}</ul>
+        <h1 className='pt-5 mb-5 text-center'>Weather App</h1>
+        <Form handleSubmit={this.handleSubmit}/>
+        <ListItem weather={this.state}/>
       </div>
     )
-  }
+  } 
+
 }
 
 export default App;

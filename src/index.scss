@@ -15,53 +15,25 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
 .main{
   background-color: white;
   min-height: 400px;
+  margin-top: 5%;
   border-radius: 5px;
-  margin-top:10%;
 
-  .main-form {
-    width:71%;
-    margin: 1rem auto !important;
-    .form-control {
-      width:60%;
-      display:inline-block;
-    }
-  } 
-
-  ul{
-    margin-left:11%;
-    font-size: 1.4rem;
-
-    .edit-form .form-control{
-      display: inline-block !important;
-      width:50% !important;
-    }
-    
-    li{
-      overflow: hidden;
-      width: 73%;
-      font-size: 1.6rem;
-      
-
-      span{
-
-        &:first-child{
-          float:left;
-          width:50% !important
-        }
-
-      }
-
-      .delete, button{
-        float: left
-      }
-      .delete{
-        width: 122px !important;
-        margin-right: 3%
-      }
-
+  form{ 
+    .form-control{
+      width: 50%;
+      margin: 3% auto
     }
   }
+
+  ul{
+    li{
+      font: 1.3rem bold;
+      margin-bottom: 1%
+    }
+  }
+
 }

@@ -1,19 +1,24 @@
 import React from 'react';
 
-const Form = ({change, submit, current}) => {
+const Form = ({handleSubmit}) => {
         return (
-            <form   className='form-group main-form'
-                    onSubmit={submit}>
+                <form   className='form-group main-form'
+                        onSubmit={handleSubmit}
+                >
+                        <input  type='text'
+                                placeholder='City'
+                                id='city'
+                                className='form-control'
+                        />
 
-                <input  type='text'
-                        placeholder='Course Name'
-                        className='form-control mr-3'
-                        onChange={change}
-                        value={current}
-                />
-                <button className='text-capitalize btn btn-primary mb-1'> add course</button>
-            </form>
+                        <input type='text'
+                                placeholder='Country'
+                                id='country'
+                                className='form-control' 
+                        />
+                        <button className='text-capitalize btn btn-primary d-block m-auto form-control'> get weather</button>
+                </form>
         )
-    }
+        }
 
 export default Form
